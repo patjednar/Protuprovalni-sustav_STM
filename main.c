@@ -89,10 +89,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
         ukljucen = 1;
         alarm = 0;
         alarmPending = 0;
-
-        HAL_GPIO_WritePin(GPIOA,
-                          GPIO_PIN_4,
-                          GPIO_PIN_SET);
     }
 
 
@@ -101,11 +97,6 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     	ukljucen = 0;
         alarm = 0;
         alarmPending = 0;
-
-        HAL_GPIO_WritePin(GPIOA,
-                          GPIO_PIN_4,
-                          GPIO_PIN_RESET);
-
         Siren_Stop();
     }
 
