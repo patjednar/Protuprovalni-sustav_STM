@@ -157,32 +157,41 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
-      /* 5 sekundi delay prije alarma (exit delay) */
-      if(alarmPending)
-      {
-          if(HAL_GetTick() - alarmStartTime >= 5000)
-          {
-              if(ukljucen)
-              {
-                  alarm = 1;
-                  Siren_Start();
-              }
+while (1)
+    {
+        /* 5 sekundi delay prije alarma */
+        if(alarmPending)
+        {
+            if(HAL_GetTick() - alarmStartTime >= 5000)
+            {
+                if(ukljucen)
+                {
+                    alarm = 1;
+                    Siren_Start();
+                }
 
-              alarmPending = 0;
-          }
-      }
+                alarmPending = 0;
+            }
+        }
 
-      /* AKTIVAN ALARM */
-      if(ukljucen)
-      {
-          HAL_GPIO_TogglePin(GPIOA,
-                             GPIO_PIN_4);
+        /* KONTROLA LED DIODE PREMA STANJU ALARMA */
+        if(alarm)
+        {
 
-          HAL_Delay(150);
-      }
-  }
+            HAL_GPIO_TogglePin(GPIOA, GPIO_PIN_4);
+            HAL_Delay(150);
+        }
+        else if(ukljucen)
+        {
+
+            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_SET);
+        }
+        else
+        {
+
+            HAL_GPIO_WritePin(GPIOA, GPIO_PIN_4, GPIO_PIN_RESET);
+        }
+    }
 
     /* USER CODE END WHILE */
 
